@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Space.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/MainCamera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/GameManager.tscn" type="PackedScene" id=4]
+
+[node name="GameScene" type="Node2D"]
+
+[node name="GameManager" parent="." instance=ExtResource( 4 )]
+
+[node name="Space" parent="." groups=["Target"] instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+
+[node name="Character" parent="." groups=["Character"] instance=ExtResource( 1 )]
+position = Vector2( 512, 300 )
+
+[node name="BulletHolder" type="Node2D" parent="."]
+
+[node name="LaserHolder" type="Node2D" parent="."]
+
+[node name="MainCamera" parent="." instance=ExtResource( 3 )]
+offset = Vector2( 512, 300 )
+
+[connection signal="after_die" from="Character" to="GameManager" method="_on_Character_after_die"]

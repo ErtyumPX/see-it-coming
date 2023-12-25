@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Space.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/MainCamera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/GameManager.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Curve" id=2]
+min_value = -1.0
+_data = [ Vector2( 0, -1 ), 0.0, 0.0, 0, 1, Vector2( 0.263889, -1 ), 0.0, 0.0, 1, 0, Vector2( 0.274306, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.486111, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.493056, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.746528, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.760417, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=1]
+min_value = -1.0
+_data = [ Vector2( 0, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.503472, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, -1 ), 0.0, 0.0, 0, 0 ]
+
+[node name="GameScene" type="Node2D"]
+
+[node name="GameManager" parent="." instance=ExtResource( 4 )]
+space_angular_speed = 6.0
+space_rotation_curve = SubResource( 2 )
+space_angular_period = 16.0
+space_margin_speed = 60.0
+space_margin_curve = SubResource( 1 )
+space_margin_period = 5.0
+
+[node name="Space" parent="." groups=["Target"] instance=ExtResource( 2 )]
+position = Vector2( 512, 300 )
+
+[node name="Character" parent="." groups=["Character"] instance=ExtResource( 1 )]
+position = Vector2( 512, 300 )
+
+[node name="BulletHolder" type="Node2D" parent="."]
+
+[node name="LaserHolder" type="Node2D" parent="."]
+
+[node name="MainCamera" parent="." instance=ExtResource( 3 )]
+offset = Vector2( 512, 300 )
+
+[connection signal="after_die" from="Character" to="GameManager" method="_on_Character_after_die"]

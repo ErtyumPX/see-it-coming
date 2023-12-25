@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/FadeTransitionCanvas.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/GameManager.gd" type="Script" id=3]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0 ]
+
+[node name="GameManager" type="Node2D"]
+script = ExtResource( 3 )
+space_angular_speed = 5.0
+space_rotation_curve = SubResource( 1 )
+space_rotation_curve_period = 1.0
+space_margin_curve = SubResource( 2 )
+bullet_timer_min = 0.8
+bullet_timer_max = 1.5
+bullet_amount_min = 2.0
+bullet_amount_max = 5.0
+add_on_bullet_chance = 70.0
+laser_timer_min = 4.0
+laser_timer_max = 8.0
+
+[node name="FadeTransitionCanvas" parent="." instance=ExtResource( 2 )]
+
+[node name="BulletTimer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="LaserTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[connection signal="timeout" from="BulletTimer" to="." method="_on_BulletTimer_timeout"]
+[connection signal="timeout" from="LaserTimer" to="." method="_on_LaserTimer_timeout"]
